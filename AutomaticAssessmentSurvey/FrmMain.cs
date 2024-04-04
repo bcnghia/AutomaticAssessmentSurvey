@@ -331,7 +331,7 @@ namespace AutomaticAssessmentSurvey
                     clickBtn.BackColor = Color.White;
                     clickBtn.ForeColor = Color.DarkSlateBlue;
                     clickBtn.IconColor = Color.DarkSlateBlue;
-                    clickBtn.Font = new Font("Microsoft Sans Serif", 20F, FontStyle.Regular, GraphicsUnit.Point,163);
+                    clickBtn.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Regular, GraphicsUnit.Point,163);
                 }
             }
         }

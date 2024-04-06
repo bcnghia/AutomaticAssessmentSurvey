@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.btnHome = new FontAwesome.Sharp.IconButton();
             this.btnData = new FontAwesome.Sharp.IconButton();
             this.pnlMenu = new System.Windows.Forms.Panel();
@@ -281,12 +282,13 @@
             this.ClientSize = new System.Drawing.Size(1181, 702);
             this.Controls.Add(this.pnlDesktop);
             this.Controls.Add(this.pnlMenu);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(1199, 749);
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "SOFTWARE CREATED BY STUDENTS OF COURSE 25TH01";
+            this.Text = "TỰ ĐỘNG ĐÁNH GIÁ KHẢO SÁT v1.0";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.pnlMenu.ResumeLayout(false);

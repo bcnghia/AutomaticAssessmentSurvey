@@ -20,6 +20,8 @@ namespace AutomaticAssessmentSurvey
     public partial class FrmMain : Form
     {
         private string filePath = System.IO.Path.Combine(AppContext.BaseDirectory, "Data", "account.txt");
+        private string filePathKhen = System.IO.Path.Combine(AppContext.BaseDirectory, "Data", "khen.txt");
+        private string filePathChe = System.IO.Path.Combine(AppContext.BaseDirectory, "Data", "phebinh.txt");
         private IconButton clickBtn;
         private Form activeForm;
         private Account account;
@@ -39,11 +41,11 @@ namespace AutomaticAssessmentSurvey
         }
         private void FrmMain_Load(object sender, EventArgs e)
         {
-            account = new ControllerData(filePath).GetDataAccount();
+            account = new ControllerDataAccount(filePath).GetDataAccount();
             txtHDSD.Text = "NOTE:" +
                            "\n\n- DEV không viết bẫy lỗi => Thêm đúng số lượng khảo sát cần đánh giá" +
                            "\n- Điểm vote ở đây sẽ là điểm chung cho toàn bộ khảo sát tương ứng" +
-                           "\n- null";
+                           "\n- (●'◡'●)";
 
             btnHome.BackColor = Color.White;
             btnHome.ForeColor = Color.DarkSlateBlue;
@@ -91,9 +93,10 @@ namespace AutomaticAssessmentSurvey
         {
             if (driver != null)
                 driver.Quit();
-            account = new ControllerData(filePath).GetDataAccount();
+            account = new ControllerDataAccount(filePath).GetDataAccount();
 
             driver = new ChromeDriver(service);
+            driver.Manage().Window.Maximize();
             driver.Url = "https://sv.bdu.edu.vn/#/home";
             // Delay để trang web load dữ liệu
             Thread.Sleep(5000);
@@ -235,19 +238,19 @@ namespace AutomaticAssessmentSurvey
             if (suv.RadChecked() <= 3)
             {
                 Thread.Sleep(100);
-                element.SendKeys("Giảng viên khá nhiều nhược điểm.");
+                element.SendKeys(new ControllerDataComment(filePathChe).GetComment());
             } else
             {
                 Thread.Sleep(100);
-                element.SendKeys("Giảng viên dạy dễ hiểu, thân thiện.");
+                element.SendKeys(new ControllerDataComment(filePathKhen).GetComment());
             }
 
             // 39. Những điều anh/chị chưa hài lòng về môn học này
-            element = driver.FindElement(By.Id("39"));
-            if (suv.RadChecked() <= 2)
+            element = driver.FindElement(By.Id("39")); // Đây là mục mặc định
+            if (suv.RadChecked() <= 3)
             {
                 Thread.Sleep(100);
-                element.SendKeys("Không có nhiều sự lựa chọn về giảng viên giảng dạy.");
+                element.SendKeys("Không có nhiều sự lựa chọn về giảng viên giảng dạy."); // mặc định
             }
             else
             {
@@ -259,12 +262,12 @@ namespace AutomaticAssessmentSurvey
             if (suv.RadChecked() <= 3)
             {
                 Thread.Sleep(100);
-                element.SendKeys("Không.");
+                element.SendKeys(new ControllerDataComment(filePathChe).GetComment());
             }
             else
             {
                 Thread.Sleep(100);
-                element.SendKeys("Mong giảng viên có thể đề cập về môn học trong ứng dụng thực tế nhiều hơn.");
+                element.SendKeys(new ControllerDataComment(filePathKhen).GetComment());
             }
             // 41. Đề xuất của Anh/Chị để việc giảng dạy môn học này được tốt hơn: Góp ý cho Nhà trường
             element = driver.FindElement(By.Id("41"));
@@ -368,7 +371,21 @@ namespace AutomaticAssessmentSurvey
         {
             //Login();
             //ClickJavaScript("Khảo sát đánh giá");
-            LogicRunSurveyVote();
+            //LogicRunSurveyVote();
+            try
+            {
+                LogicRunSurveyVote();
+            }
+            catch (Exception ex)
+            {
+                driver.Quit();
+                MessageBox.Show("Vui lòng trở lại khi có khảo sát mới",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            //finally
+            //{
+            //    driver.Quit() ;
+            //}
         }
 
         private void btnTKB_Click(object sender, EventArgs e)

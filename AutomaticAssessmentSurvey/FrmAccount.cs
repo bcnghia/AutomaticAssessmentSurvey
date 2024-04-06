@@ -23,7 +23,7 @@ namespace AutomaticAssessmentSurvey
 
         private void FrmAccount_Load(object sender, EventArgs e)
         {
-            account = new ControllerData(filePath).GetDataAccount();
+            account = new ControllerDataAccount(filePath).GetDataAccount();
             txtUser.Text = account.User;
             txtPassword.Text = account.Password;
             cboGioiTinh.Text = account.GioiTinh;
@@ -31,7 +31,8 @@ namespace AutomaticAssessmentSurvey
             txtHDSD.Text = "NOTE:" +
                            "\n\n- Nhập thông tin tài khoản vào và nhấn Save để sử dụng" +
                            "\n\n- Trường hợp cần sửa thông tin thì sửa trực tiếp và nhấn Save" +
-                           "\n\n- Phần mềm lưu cùng lúc chỉ một tài khoản";
+                           "\n\n- Phần mềm lưu cùng lúc chỉ một tài khoản > Muốn nhiều hơn thì donate:))" +
+                           "\n\n- (●'◡'●)";
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -39,13 +40,13 @@ namespace AutomaticAssessmentSurvey
             account.User = txtUser.Text;
             account.Password = txtPassword.Text;
             account.GioiTinh = cboGioiTinh.Text;
-            new ControllerData(filePath).EditData(account);
+            new ControllerDataAccount(filePath).EditData(account);
             MessageBox.Show("Lưu tài khoản thành công!");
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            new ControllerData(filePath).DeleteData();
+            new ControllerDataAccount(filePath).DeleteData();
             MessageBox.Show("Xóa tài khoản thành công!");
         }
 

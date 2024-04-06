@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace AutomaticAssessmentSurvey
 {
-    class ControllerData
+    class ControllerDataAccount
     {
         string filePath;
         Account account;
         
-        public ControllerData() { }
-        public ControllerData(string filePath)
+        public ControllerDataAccount() { }
+        public ControllerDataAccount(string filePath)
         {
             this.filePath = filePath;
             LoadDataFromFile();

@@ -33,11 +33,11 @@
             this.lblPassword = new System.Windows.Forms.Label();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cboGioiTinh = new System.Windows.Forms.ComboBox();
             this.txtHDSD = new System.Windows.Forms.RichTextBox();
             this.btnDelete = new FontAwesome.Sharp.IconButton();
             this.btnSave = new FontAwesome.Sharp.IconButton();
             this.txtGioiTinh = new System.Windows.Forms.Label();
-            this.cboGioiTinh = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -105,6 +105,22 @@
             this.panel1.Size = new System.Drawing.Size(607, 482);
             this.panel1.TabIndex = 2;
             // 
+            // cboGioiTinh
+            // 
+            this.cboGioiTinh.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cboGioiTinh.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboGioiTinh.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.cboGioiTinh.ForeColor = System.Drawing.Color.SlateBlue;
+            this.cboGioiTinh.FormattingEnabled = true;
+            this.cboGioiTinh.Items.AddRange(new object[] {
+            "Nam",
+            "Nữ"});
+            this.cboGioiTinh.Location = new System.Drawing.Point(281, 149);
+            this.cboGioiTinh.Name = "cboGioiTinh";
+            this.cboGioiTinh.Size = new System.Drawing.Size(285, 46);
+            this.cboGioiTinh.TabIndex = 5;
+            this.cboGioiTinh.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cboGioiTinh_DrawItem);
+            // 
             // txtHDSD
             // 
             this.txtHDSD.BackColor = System.Drawing.Color.SlateBlue;
@@ -121,9 +137,9 @@
             // btnDelete
             // 
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnDelete.ForeColor = System.Drawing.Color.SlateBlue;
+            this.btnDelete.ForeColor = System.Drawing.Color.White;
             this.btnDelete.IconChar = FontAwesome.Sharp.IconChar.TrashAlt;
-            this.btnDelete.IconColor = System.Drawing.Color.SlateBlue;
+            this.btnDelete.IconColor = System.Drawing.Color.White;
             this.btnDelete.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnDelete.Location = new System.Drawing.Point(48, 218);
             this.btnDelete.Name = "btnDelete";
@@ -131,15 +147,15 @@
             this.btnDelete.TabIndex = 2;
             this.btnDelete.Text = "Delete";
             this.btnDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // btnSave
             // 
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnSave.ForeColor = System.Drawing.Color.SlateBlue;
+            this.btnSave.ForeColor = System.Drawing.Color.White;
             this.btnSave.IconChar = FontAwesome.Sharp.IconChar.FloppyDisk;
-            this.btnSave.IconColor = System.Drawing.Color.SlateBlue;
+            this.btnSave.IconColor = System.Drawing.Color.White;
             this.btnSave.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnSave.IconSize = 55;
             this.btnSave.Location = new System.Drawing.Point(409, 218);
@@ -148,7 +164,7 @@
             this.btnSave.TabIndex = 2;
             this.btnSave.Text = "Save";
             this.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // txtGioiTinh
@@ -161,22 +177,6 @@
             this.txtGioiTinh.TabIndex = 1;
             this.txtGioiTinh.Text = "Giới Tính";
             this.txtGioiTinh.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // cboGioiTinh
-            // 
-            this.cboGioiTinh.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cboGioiTinh.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboGioiTinh.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.cboGioiTinh.ForeColor = System.Drawing.Color.SlateBlue;
-            this.cboGioiTinh.FormattingEnabled = true;
-            this.cboGioiTinh.Items.AddRange(new object[] {
-            "Nam",
-            "Nữ"});
-            this.cboGioiTinh.Location = new System.Drawing.Point(281, 149);
-            this.cboGioiTinh.Name = "cboGioiTinh";
-            this.cboGioiTinh.Size = new System.Drawing.Size(285, 46);
-            this.cboGioiTinh.TabIndex = 5;
-            this.cboGioiTinh.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cboGioiTinh_DrawItem);
             // 
             // FrmAccount
             // 

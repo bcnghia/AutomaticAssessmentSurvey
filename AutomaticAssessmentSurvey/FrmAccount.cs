@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using FireSharp.Config;
+using FireSharp.Interfaces;
+using FireSharp.Response;
 
 namespace AutomaticAssessmentSurvey
 {
@@ -15,6 +18,14 @@ namespace AutomaticAssessmentSurvey
     {
         private string filePath = Path.Combine(AppContext.BaseDirectory, "Data", "account.txt");
         private Account account;
+        
+
+        IFirebaseConfig config = new FirebaseConfig
+        {
+            AuthSecret = "M5W4ZqFo90v3CjEokDbL95MwQ9bNa6IbNSoGFHIb",
+            BasePath = "https://accountsinhvien-default-rtdb.firebaseio.com/"
+        };
+        IFirebaseClient client;
         public FrmAccount()
         {
             InitializeComponent();
@@ -23,6 +34,16 @@ namespace AutomaticAssessmentSurvey
 
         private void FrmAccount_Load(object sender, EventArgs e)
         {
+            try
+            {
+                client = new FireSharp.FirebaseClient(config);
+            }
+
+            catch
+            {
+                MessageBox.Show("No Internet or Connection Problem", "Warning!");
+            }
+
             account = new ControllerDataAccount(filePath).GetDataAccount();
             txtUser.Text = account.User;
             txtPassword.Text = account.Password;
@@ -41,6 +62,12 @@ namespace AutomaticAssessmentSurvey
             account.Password = txtPassword.Text;
             account.GioiTinh = cboGioiTinh.Text;
             new ControllerDataAccount(filePath).EditData(account);
+
+            SetResponse set = client.Set(@"Users/" + txtUser.Text, account);
+            //if (set.StatusCode == System.Net.HttpStatusCode.OK)
+            //{
+            //    MessageBox.Show($"Successfully registered {txtUser.Text}!", "Information!");
+            //} dùng để thông báo rằng tài khoản đã được lưu vào database
             MessageBox.Show("Lưu tài khoản thành công!");
         }
 

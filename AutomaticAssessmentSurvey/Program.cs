@@ -22,8 +22,11 @@ namespace AutomaticAssessmentSurvey
             }
             catch
             {
-                MessageBox.Show("Vui lòng cập nhật ứng dụng lên phiên bản mới nhất!",
+                MessageBox.Show("Đã có lỗi xảy ra trong tiến trình hoạt động:\n• Kiểm tra lại kết nối Internet!" +
+                    "\n• Cập nhật ứng dụng lên phiên bản mới nhất!",
                                 "Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                Application.Exit();
+                
             }
         }
     }

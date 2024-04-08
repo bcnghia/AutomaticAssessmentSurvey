@@ -14,6 +14,7 @@ using OpenQA.Selenium.Chrome;
 using System.Globalization;
 using System.Threading;
 using AutomaticAssessmentSurvey;
+using System.Net.NetworkInformation;
 
 namespace AutomaticAssessmentSurvey
 {
@@ -127,6 +128,15 @@ namespace AutomaticAssessmentSurvey
             Thread.Sleep(100);
             IJavaScriptExecutor jsExcutor = (IJavaScriptExecutor)driver;
             jsExcutor.ExecuteScript("arguments[0].click();", khaoSat);
+        }
+
+        private bool CheckingConnection()
+        {
+            var ping = new Ping();
+            var pingReply = ping.Send("google.com.vn");
+            //Console.WriteLine(pingReply.Status);
+            if (pingReply.Status == IPStatus.Success) return true;
+            else return false;
         }
 
         private void ThucHienKhaoSat(SurveyVote suv)
@@ -369,39 +379,41 @@ namespace AutomaticAssessmentSurvey
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-            //Login();
-            //ClickJavaScript("Khảo sát đánh giá");
-            //LogicRunSurveyVote();
-            try
+            if (CheckingConnection())
             {
-                LogicRunSurveyVote();
+                try
+                {
+                    LogicRunSurveyVote();
+                }
+                catch (Exception ex)
+                {
+                    driver.Quit();
+                    MessageBox.Show("Vui lòng trở lại khi có khảo sát mới",
+                                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            catch (Exception ex)
-            {
-                driver.Quit();
-                MessageBox.Show("Vui lòng trở lại khi có khảo sát mới",
-                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            //finally
-            //{
-            //    driver.Quit() ;
-            //}
         }
 
         private void btnTKB_Click(object sender, EventArgs e)
         {
-            Login();
+            if (CheckingConnection())
+            {
+                Login();
 
-            // Tìm - Click vào link cần chọn
-            ClickJavaScript("Xem thời khóa biểu tuần");
+                // Tìm - Click vào link cần chọn
+                ClickJavaScript("Xem thời khóa biểu tuần");
+            }
         }
 
         private void btnLichThi_Click(object sender, EventArgs e)
         {
-            Login();
+            if (CheckingConnection() )
+            {
+                Login();
 
-            // Tìm - Click vào link cần chọn
-            ClickJavaScript("Xem lịch thi");
+                // Tìm - Click vào link cần chọn
+                ClickJavaScript("Xem lịch thi");
+            }
         }
         #endregion
 

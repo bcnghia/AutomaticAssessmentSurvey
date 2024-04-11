@@ -43,10 +43,10 @@ namespace AutomaticAssessmentSurvey
         private void FrmMain_Load(object sender, EventArgs e)
         {
             account = new ControllerDataAccount(filePath).GetDataAccount();
-            txtHDSD.Text = "NOTE:" +
+            txtHDSD.Text = "NOTE: ĐIỀU QUAN TRỌNG NÓI BA LẦN" +
                            "\n\n- DEV không viết bẫy lỗi => Thêm đúng số lượng khảo sát cần đánh giá" +
-                           "\n- Điểm vote ở đây sẽ là điểm chung cho toàn bộ khảo sát tương ứng" +
-                           "\n- (●'◡'●)";
+                           "\n- DEV không viết bẫy lỗi => Thêm đúng số lượng khảo sát cần đánh giá" +
+                           "\n- DEV không viết bẫy lỗi => Thêm đúng số lượng khảo sát cần đánh giá";
 
             btnHome.BackColor = Color.White;
             btnHome.ForeColor = Color.DarkSlateBlue;
@@ -112,6 +112,21 @@ namespace AutomaticAssessmentSurvey
             IWebElement login = driver.FindElement(By.XPath("//button[contains(text(), 'Đăng nhập')]"));
             login.Click();
             Thread.Sleep(2000);
+            try
+            {
+                IWebElement loggedInElement = driver.FindElement(By.XPath("/html/body/app-root/div/div/div/div[1]/div/div/div[2]/app-right/app-login/div/div[2]/div[2]/button"));
+                // kiểm tra xem có nút "ĐĂNG XUẤT" trên màn hình không 
+                // Có thì không có lỗi, không có là có lỗi dẫn đến không đăng nhập thành công
+                Console.WriteLine("Logged in Successfully!");
+
+            }
+            catch (Exception ex)
+            {
+                driver.Quit();
+                MessageBox.Show("Thông tin đăng nhập không hợp lệ",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw;
+            }
         }
 
         private void ClickJavaScript(string nameButton)
@@ -388,8 +403,6 @@ namespace AutomaticAssessmentSurvey
                 catch (Exception ex)
                 {
                     driver.Quit();
-                    MessageBox.Show("Vui lòng trở lại khi có khảo sát mới",
-                                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -450,37 +463,44 @@ namespace AutomaticAssessmentSurvey
 
             Login();
 
-            // Thực hiện khảo sát đánh giá - mở các khảo sát và đánh giá
-            int count = 0;
-            foreach (SurveyVote suv in suvList)
+            try
             {
-                // vào trang khảo sát đánh giá
-                ClickJavaScript("Khảo sát đánh giá");
+                // Thực hiện khảo sát đánh giá - mở các khảo sát và đánh giá
+                int count = 0;
+                foreach (SurveyVote suv in suvList)
+                {
+                    // vào trang khảo sát đánh giá
+                    ClickJavaScript("Khảo sát đánh giá");
 
-                // đợi màn hình load lên danh sách khảo sát đánh giá hiện có
-                Thread.Sleep(2000);
+                    // đợi màn hình load lên danh sách khảo sát đánh giá hiện có
+                    Thread.Sleep(2000);
 
-                // tăng số thự tự của khảo sát lên
-                count++; 
+                    // tăng số thự tự của khảo sát lên
+                    count++;
 
-                // chọn vào khảo sát dựa trên số thứ tự của khảo sát
-                ClickKhaoSat(count);
+                    // chọn vào khảo sát dựa trên số thứ tự của khảo sát
+                    ClickKhaoSat(count);
 
-                // đợi màn hình load lên Form của khảo sát vừa click
-                Thread.Sleep(1000);
+                    // đợi màn hình load lên Form của khảo sát vừa click
+                    Thread.Sleep(1000);
 
-                // Thực hiện điền form khảo sát
-                ThucHienKhaoSat(suv);
+                    // Thực hiện điền form khảo sát
+                    ThucHienKhaoSat(suv);
 
-                rtxtProgress.Text += "\n• Điểm Vote " + suv.Title + ": " + suv.RadChecked();
-                fpnlDesktop.Controls.Remove(suv);
-                // Dù vòng lặp duyệt qua List nhưng REMOVE dùng fpnlDesktop nên vẫn sẽ xóa được
-                nudSoLuongKhaoSat.Value = nudSoLuongKhaoSat.Value - 1;
+                    rtxtProgress.Text += "\n• Điểm Vote " + suv.Title + ": " + suv.RadChecked();
+                    fpnlDesktop.Controls.Remove(suv);
+                    // Dù vòng lặp duyệt qua List nhưng REMOVE dùng fpnlDesktop nên vẫn sẽ xóa được
+                    nudSoLuongKhaoSat.Value = nudSoLuongKhaoSat.Value - 1;
+                }
             }
-
-
+            catch (Exception ex)
+            {
+                driver.Quit();
+                MessageBox.Show("Vui lòng trở lại khi có khảo sát mới",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         #endregion
-
+        
     }
 }

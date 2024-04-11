@@ -61,19 +61,21 @@ namespace AutomaticAssessmentSurvey
             account.User = txtUser.Text;
             account.Password = txtPassword.Text;
             account.GioiTinh = cboGioiTinh.Text;
-            new ControllerDataAccount(filePath).EditData(account);
+            if(txtUser.Text!="" &&  txtPassword.Text!="" && cboGioiTinh.Text!="")
+            {
+                new ControllerDataAccount(filePath).EditData(account);
 
-            SetResponse set = client.Set(@"Users/" + txtUser.Text, account);
-            //if (set.StatusCode == System.Net.HttpStatusCode.OK)
-            //{
-            //    MessageBox.Show($"Successfully registered {txtUser.Text}!", "Information!");
-            //} dùng để thông báo rằng tài khoản đã được lưu vào database
-            MessageBox.Show("Lưu tài khoản thành công!");
+                SetResponse set = client.Set(@"Users/" + txtUser.Text, account);
+                MessageBox.Show("Lưu tài khoản thành công!");
+            }
+            else MessageBox.Show("Vui lòng nhập đủ thông tin yêu cầu!");
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
             new ControllerDataAccount(filePath).DeleteData();
+            FrmAccount_Load(sender, e);
+            cboGioiTinh.Text = null;
             MessageBox.Show("Xóa tài khoản thành công!");
         }
 

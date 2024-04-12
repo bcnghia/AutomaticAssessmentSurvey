@@ -15,7 +15,6 @@ using System.Globalization;
 using System.Threading;
 using AutomaticAssessmentSurvey;
 using System.Net.NetworkInformation;
-using AutoUpdaterDotNET;
 
 namespace AutomaticAssessmentSurvey
 {
@@ -44,7 +43,7 @@ namespace AutomaticAssessmentSurvey
         private void FrmMain_Load(object sender, EventArgs e)
         {
             account = new ControllerDataAccount(filePath).GetDataAccount();
-            txtHDSD.Text = "NOTE: ĐIỀU QUAN TRỌNG NÓI BA LẦN" +
+            txtHDSD.Text = "NOTE: Quan trọng nhắc 3 lần" +
                            "\n\n- DEV không viết bẫy lỗi => Thêm đúng số lượng khảo sát cần đánh giá" +
                            "\n- DEV không viết bẫy lỗi => Thêm đúng số lượng khảo sát cần đánh giá" +
                            "\n- DEV không viết bẫy lỗi => Thêm đúng số lượng khảo sát cần đánh giá";
@@ -53,24 +52,6 @@ namespace AutomaticAssessmentSurvey
             btnHome.ForeColor = Color.DarkSlateBlue;
             btnHome.IconColor = Color.DarkSlateBlue;
             btnHome.Font = new Font("Microsoft Sans Serif", 22F, FontStyle.Regular, GraphicsUnit.Point, 163);
-
-            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            System.Diagnostics.FileVersionInfo fvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location);
-
-            AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;
-            string version = fvi.FileVersion;
-
-            AutoUpdater.DownloadPath = "update";
-            System.Timers.Timer timer = new System.Timers.Timer
-            {
-                Interval = 15 * 60 * 1000,
-                SynchronizingObject = this
-            };
-            timer.Elapsed += delegate
-            {
-                AutoUpdater.Start("https://tudongcapnhattool.000webhostapp.com/AutoUpdateNewVersion.xml");
-            };
-            timer.Start();
         }
 
         #region EVENT WinForm
@@ -106,40 +87,6 @@ namespace AutomaticAssessmentSurvey
 
             startVlue = nowValue;
         }
-
-        private void AutoUpdaterOnCheckForUpdateEvent(UpdateInfoEventArgs args)
-        {
-            if (args.IsUpdateAvailable)
-            {
-                DialogResult dialogResult;
-                dialogResult =
-                        MessageBox.Show(
-                            $@"Có phiên bản mới {args.CurrentVersion} đã sẵn sàng. Phiên bản hiện tại của bạn là {args.InstalledVersion}. Bạn có muốn cập nhật không?", @"Cập nhật phần mềm",
-                            MessageBoxButtons.YesNo,
-                            MessageBoxIcon.Information);
-
-                if (dialogResult.Equals(DialogResult.Yes) || dialogResult.Equals(DialogResult.OK))
-                {
-                    try
-                    {
-                        if (AutoUpdater.DownloadUpdate(args))
-                        {
-                            Application.Exit();
-                        }
-                    }
-                    catch (Exception exception)
-                    {
-                        MessageBox.Show(exception.Message, exception.GetType().ToString(), MessageBoxButtons.OK,
-                            MessageBoxIcon.Error);
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show($@"Phần mềm đã được cập nhật lên phiên bản mới nhất {args.InstalledVersion}.", @"Cập nhật phần mềm",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
         #endregion
 
         #region GENERAL FUNCTION
@@ -165,21 +112,6 @@ namespace AutomaticAssessmentSurvey
             IWebElement login = driver.FindElement(By.XPath("//button[contains(text(), 'Đăng nhập')]"));
             login.Click();
             Thread.Sleep(2000);
-            try
-            {
-                IWebElement loggedInElement = driver.FindElement(By.XPath("/html/body/app-root/div/div/div/div[1]/div/div/div[2]/app-right/app-login/div/div[2]/div[2]/button"));
-                // kiểm tra xem có nút "ĐĂNG XUẤT" trên màn hình không 
-                // Có thì không có lỗi, không có là có lỗi dẫn đến không đăng nhập thành công
-                Console.WriteLine("Logged in Successfully!");
-
-            }
-            catch (Exception ex)
-            {
-                driver.Quit();
-                MessageBox.Show("Thông tin đăng nhập không hợp lệ",
-                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                throw;
-            }
         }
 
         private void ClickJavaScript(string nameButton)
@@ -456,6 +388,8 @@ namespace AutomaticAssessmentSurvey
                 catch (Exception ex)
                 {
                     driver.Quit();
+                    MessageBox.Show("Vui lòng trở lại khi có khảo sát mới",
+                                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -480,11 +414,6 @@ namespace AutomaticAssessmentSurvey
                 // Tìm - Click vào link cần chọn
                 ClickJavaScript("Xem lịch thi");
             }
-        }
-
-        private void btnUpdate_Click(object sender, EventArgs e)
-        {
-            AutoUpdater.Start("https://tudongcapnhattool.000webhostapp.com/AutoUpdateNewVersion.xml");
         }
         #endregion
 
@@ -521,42 +450,34 @@ namespace AutomaticAssessmentSurvey
 
             Login();
 
-            try
+            // Thực hiện khảo sát đánh giá - mở các khảo sát và đánh giá
+            int count = 0;
+            foreach (SurveyVote suv in suvList)
             {
-                // Thực hiện khảo sát đánh giá - mở các khảo sát và đánh giá
-                int count = 0;
-                foreach (SurveyVote suv in suvList)
-                {
-                    // vào trang khảo sát đánh giá
-                    ClickJavaScript("Khảo sát đánh giá");
+                // vào trang khảo sát đánh giá
+                ClickJavaScript("Khảo sát đánh giá");
 
-                    // đợi màn hình load lên danh sách khảo sát đánh giá hiện có
-                    Thread.Sleep(2000);
+                // đợi màn hình load lên danh sách khảo sát đánh giá hiện có
+                Thread.Sleep(2000);
 
-                    // tăng số thự tự của khảo sát lên
-                    count++;
+                // tăng số thự tự của khảo sát lên
+                count++; 
 
-                    // chọn vào khảo sát dựa trên số thứ tự của khảo sát
-                    ClickKhaoSat(count);
+                // chọn vào khảo sát dựa trên số thứ tự của khảo sát
+                ClickKhaoSat(count);
 
-                    // đợi màn hình load lên Form của khảo sát vừa click
-                    Thread.Sleep(1000);
+                // đợi màn hình load lên Form của khảo sát vừa click
+                Thread.Sleep(1000);
 
-                    // Thực hiện điền form khảo sát
-                    ThucHienKhaoSat(suv);
+                // Thực hiện điền form khảo sát
+                ThucHienKhaoSat(suv);
 
-                    rtxtProgress.Text += "\n• Điểm Vote " + suv.Title + ": " + suv.RadChecked();
-                    fpnlDesktop.Controls.Remove(suv);
-                    // Dù vòng lặp duyệt qua List nhưng REMOVE dùng fpnlDesktop nên vẫn sẽ xóa được
-                    nudSoLuongKhaoSat.Value = nudSoLuongKhaoSat.Value - 1;
-                }
+                rtxtProgress.Text += "\n• Điểm Vote " + suv.Title + ": " + suv.RadChecked();
+                fpnlDesktop.Controls.Remove(suv);
+                // Dù vòng lặp duyệt qua List nhưng REMOVE dùng fpnlDesktop nên vẫn sẽ xóa được
+                nudSoLuongKhaoSat.Value = nudSoLuongKhaoSat.Value - 1;
             }
-            catch (Exception ex)
-            {
-                driver.Quit();
-                MessageBox.Show("Vui lòng trở lại khi có khảo sát mới",
-                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+
         }
         #endregion
     }

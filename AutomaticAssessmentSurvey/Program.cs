@@ -23,7 +23,6 @@ namespace AutomaticAssessmentSurvey
             catch
             {
                 MessageBox.Show("Đã có lỗi xảy ra trong tiến trình hoạt động:\n• Kiểm tra lại kết nối Internet!" +
-                    "\n• Kiểm tra lại thông tin đăng nhập - MSSV, mật khẩu" +
                     "\n• Cập nhật ứng dụng lên phiên bản mới nhất!",
                                 "Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
                 Application.Exit();

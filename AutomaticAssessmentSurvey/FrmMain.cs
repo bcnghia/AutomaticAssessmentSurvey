@@ -15,6 +15,7 @@ using System.Globalization;
 using System.Threading;
 using AutomaticAssessmentSurvey;
 using System.Net.NetworkInformation;
+using AutoUpdaterDotNET;
 
 namespace AutomaticAssessmentSurvey
 {
@@ -52,6 +53,24 @@ namespace AutomaticAssessmentSurvey
             btnHome.ForeColor = Color.DarkSlateBlue;
             btnHome.IconColor = Color.DarkSlateBlue;
             btnHome.Font = new Font("Microsoft Sans Serif", 22F, FontStyle.Regular, GraphicsUnit.Point, 163);
+
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            System.Diagnostics.FileVersionInfo fvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location);
+
+            AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;
+            string version = fvi.FileVersion;
+
+            AutoUpdater.DownloadPath = "update";
+            System.Timers.Timer timer = new System.Timers.Timer
+            {
+                Interval = 15 * 60 * 1000,
+                SynchronizingObject = this
+            };
+            timer.Elapsed += delegate
+            {
+                AutoUpdater.Start("https://tudongcapnhattool.000webhostapp.com/AutoUpdateNewVersion.xml");
+            };
+            timer.Start();
         }
 
         #region EVENT WinForm
@@ -86,6 +105,40 @@ namespace AutomaticAssessmentSurvey
             }
 
             startVlue = nowValue;
+        }
+
+        private void AutoUpdaterOnCheckForUpdateEvent(UpdateInfoEventArgs args)
+        {
+            if (args.IsUpdateAvailable)
+            {
+                DialogResult dialogResult;
+                dialogResult =
+                        MessageBox.Show(
+                            $@"Có phiên bản mới {args.CurrentVersion} đã sẵn sàng. Phiên bản hiện tại của bạn là {args.InstalledVersion}. Bạn có muốn cập nhật không?", @"Cập nhật phần mềm",
+                            MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Information);
+
+                if (dialogResult.Equals(DialogResult.Yes) || dialogResult.Equals(DialogResult.OK))
+                {
+                    try
+                    {
+                        if (AutoUpdater.DownloadUpdate(args))
+                        {
+                            Application.Exit();
+                        }
+                    }
+                    catch (Exception exception)
+                    {
+                        MessageBox.Show(exception.Message, exception.GetType().ToString(), MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show($@"Phần mềm đã được cập nhật lên phiên bản mới nhất {args.InstalledVersion}.", @"Cập nhật phần mềm",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
         #endregion
 
@@ -428,6 +481,11 @@ namespace AutomaticAssessmentSurvey
                 ClickJavaScript("Xem lịch thi");
             }
         }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            AutoUpdater.Start("https://tudongcapnhattool.000webhostapp.com/AutoUpdateNewVersion.xml");
+        }
         #endregion
 
         #region LOGIC KHẢO SÁT ĐÁNH GIÁ
@@ -501,6 +559,5 @@ namespace AutomaticAssessmentSurvey
             }
         }
         #endregion
-        
     }
 }

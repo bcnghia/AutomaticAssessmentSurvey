@@ -32,6 +32,7 @@
             this.btnHome = new FontAwesome.Sharp.IconButton();
             this.btnData = new FontAwesome.Sharp.IconButton();
             this.pnlMenu = new System.Windows.Forms.Panel();
+            this.btnUpdate = new FontAwesome.Sharp.IconButton();
             this.btnCmt = new FontAwesome.Sharp.IconButton();
             this.pnlDesktop = new System.Windows.Forms.Panel();
             this.rtxtProgress = new System.Windows.Forms.RichTextBox();
@@ -96,6 +97,7 @@
             // pnlMenu
             // 
             this.pnlMenu.BackColor = System.Drawing.Color.DarkSlateBlue;
+            this.pnlMenu.Controls.Add(this.btnUpdate);
             this.pnlMenu.Controls.Add(this.btnCmt);
             this.pnlMenu.Controls.Add(this.btnData);
             this.pnlMenu.Controls.Add(this.btnHome);
@@ -105,6 +107,28 @@
             this.pnlMenu.Name = "pnlMenu";
             this.pnlMenu.Size = new System.Drawing.Size(247, 702);
             this.pnlMenu.TabIndex = 0;
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnUpdate.FlatAppearance.BorderSize = 0;
+            this.btnUpdate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUpdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.btnUpdate.ForeColor = System.Drawing.Color.White;
+            this.btnUpdate.IconChar = FontAwesome.Sharp.IconChar.Download;
+            this.btnUpdate.IconColor = System.Drawing.Color.White;
+            this.btnUpdate.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnUpdate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnUpdate.Location = new System.Drawing.Point(0, 610);
+            this.btnUpdate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(247, 92);
+            this.btnUpdate.TabIndex = 3;
+            this.btnUpdate.Text = "UPDATE";
+            this.btnUpdate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnUpdate.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
             // btnCmt
             // 
@@ -288,7 +312,7 @@
             this.MaximumSize = new System.Drawing.Size(1199, 749);
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "TỰ ĐỘNG ĐÁNH GIÁ KHẢO SÁT v1.0";
+            this.Text = "TỰ ĐỘNG ĐÁNH GIÁ KHẢO SÁT";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.pnlMenu.ResumeLayout(false);
@@ -315,6 +339,7 @@
         private FontAwesome.Sharp.IconButton btnLichThi;
         private System.Windows.Forms.RichTextBox rtxtProgress;
         private FontAwesome.Sharp.IconButton btnCmt;
+        private FontAwesome.Sharp.IconButton btnUpdate;
     }
 }
 

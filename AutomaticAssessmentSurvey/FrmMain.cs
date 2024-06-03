@@ -244,7 +244,7 @@ namespace AutomaticAssessmentSurvey
 
             #region VIII. Ý kiến khác
             // 37. Những ưu điểm nổi bật của giảng viên trong quá trình giảng dạy học phần
-            element = driver.FindElement(By.Id("38"));
+            element = driver.FindElement(By.Id("37"));
             if (suv.RadChecked() <= 3)
             {
                 Thread.Sleep(100);
@@ -256,7 +256,7 @@ namespace AutomaticAssessmentSurvey
             }
 
             // 38. Những điều anh/chị chưa hài lòng về môn học này
-            element = driver.FindElement(By.Id("39")); // Đây là mục mặc định
+            element = driver.FindElement(By.Id("38")); // Đây là mục mặc định
             if (suv.RadChecked() <= 3)
             {
                 Thread.Sleep(100);
@@ -268,7 +268,7 @@ namespace AutomaticAssessmentSurvey
                 element.SendKeys("Không.");
             }
             // 39. Đề xuất của Anh/Chị để việc giảng dạy môn học này được tốt hơn: Góp ý cho Giảng viên
-            element = driver.FindElement(By.Id("40"));
+            element = driver.FindElement(By.Id("39"));
             if (suv.RadChecked() <= 3)
             {
                 Thread.Sleep(100);
@@ -280,7 +280,7 @@ namespace AutomaticAssessmentSurvey
                 element.SendKeys(new ControllerDataComment(filePathKhen).GetComment());
             }
             // 40. Đề xuất của Anh/Chị để việc giảng dạy môn học này được tốt hơn: Góp ý cho Nhà trường
-            element = driver.FindElement(By.Id("41"));
+            element = driver.FindElement(By.Id("40"));
             if (suv.RadChecked() <= 2)
             {
                 Thread.Sleep(100);
@@ -381,16 +381,7 @@ namespace AutomaticAssessmentSurvey
         {
             if (CheckingConnection())
             {
-                try
-                {
-                    LogicRunSurveyVote();
-                }
-                catch (Exception ex)
-                {
-                    driver.Quit();
-                    MessageBox.Show("Vui lòng trở lại khi có khảo sát mới",
-                                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                LogicRunSurveyVote();
             }
         }
 

@@ -232,8 +232,8 @@ namespace AutomaticAssessmentSurvey
             }
             #endregion
 
-            #region VII. Cảm nhận chung về học phần
-            for (int i = 1; i <= 2; i++)
+            #region VII. Đánh giá mức độ hài lòng đối với giảng viên
+            for (int i = 1; i <= 1; i++)
             {
                 element = driver.FindElement(By.XPath($"/html/body/app-root/div/div/div/div[1]/div/div/div[1]/app-ksdg-cauhoi/div/div[2]/div/div[11]/app-child-ksdg-thangdo/div/div/table/tbody[{i}]/tr/td[{2 + suv.RadChecked()}]/input"));
 
@@ -243,7 +243,7 @@ namespace AutomaticAssessmentSurvey
             #endregion
 
             #region VIII. Ý kiến khác
-            // 38. Những ưu điểm nổi bật của giảng viên trong quá trình giảng dạy học phần
+            // 37. Những ưu điểm nổi bật của giảng viên trong quá trình giảng dạy học phần
             element = driver.FindElement(By.Id("38"));
             if (suv.RadChecked() <= 3)
             {
@@ -255,7 +255,7 @@ namespace AutomaticAssessmentSurvey
                 element.SendKeys(new ControllerDataComment(filePathKhen).GetComment());
             }
 
-            // 39. Những điều anh/chị chưa hài lòng về môn học này
+            // 38. Những điều anh/chị chưa hài lòng về môn học này
             element = driver.FindElement(By.Id("39")); // Đây là mục mặc định
             if (suv.RadChecked() <= 3)
             {
@@ -267,7 +267,7 @@ namespace AutomaticAssessmentSurvey
                 Thread.Sleep(100);
                 element.SendKeys("Không.");
             }
-            // 40. Đề xuất của Anh/Chị để việc giảng dạy môn học này được tốt hơn: Góp ý cho Giảng viên
+            // 39. Đề xuất của Anh/Chị để việc giảng dạy môn học này được tốt hơn: Góp ý cho Giảng viên
             element = driver.FindElement(By.Id("40"));
             if (suv.RadChecked() <= 3)
             {
@@ -279,7 +279,7 @@ namespace AutomaticAssessmentSurvey
                 Thread.Sleep(100);
                 element.SendKeys(new ControllerDataComment(filePathKhen).GetComment());
             }
-            // 41. Đề xuất của Anh/Chị để việc giảng dạy môn học này được tốt hơn: Góp ý cho Nhà trường
+            // 40. Đề xuất của Anh/Chị để việc giảng dạy môn học này được tốt hơn: Góp ý cho Nhà trường
             element = driver.FindElement(By.Id("41"));
             if (suv.RadChecked() <= 2)
             {

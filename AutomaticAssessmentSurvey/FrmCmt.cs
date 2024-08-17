@@ -13,12 +13,17 @@ namespace AutomaticAssessmentSurvey
 {
     public partial class FrmCmt : Form
     {
-        private string filePathKhen = Path.Combine(AppContext.BaseDirectory, "Data", "khen.txt");
-        private string filePathChe = Path.Combine(AppContext.BaseDirectory, "Data", "phebinh.txt");
+        private string filePathKhen, filePathChe;
         private string cmtKhens, cmtChes;
         public FrmCmt()
         {
             InitializeComponent();
+
+            string relativeKhenPath = @"Data\khen.txt";
+            filePathKhen = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativeKhenPath);
+
+            string relativePheBinhPath = @"Data\phebinh.txt";
+            filePathChe = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePheBinhPath);
         }
 
         private void FrmCmt_Load(object sender, EventArgs e)

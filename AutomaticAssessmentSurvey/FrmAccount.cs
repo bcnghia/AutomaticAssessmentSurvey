@@ -8,46 +8,39 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using FireSharp.Config;
-using FireSharp.Interfaces;
-using FireSharp.Response;
 
 namespace AutomaticAssessmentSurvey
 {
     public partial class FrmAccount : Form
     {
-        private string filePath = Path.Combine(AppContext.BaseDirectory, "Data", "account.txt");
+        private string filePath;
         private Account account;
         
-
-        IFirebaseConfig config = new FirebaseConfig
-        {
-            AuthSecret = "M5W4ZqFo90v3CjEokDbL95MwQ9bNa6IbNSoGFHIb",
-            BasePath = "https://accountsinhvien-default-rtdb.firebaseio.com/"
-        };
-        IFirebaseClient client;
         public FrmAccount()
         {
             InitializeComponent();
             cboGioiTinh.DrawItem += new DrawItemEventHandler(cboGioiTinh_DrawItem);
+
+            string relativePath = @"Data\account.txt";
+            filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
         }
 
         private void FrmAccount_Load(object sender, EventArgs e)
         {
-            try
-            {
-                client = new FireSharp.FirebaseClient(config);
-            }
+            var controller = new ControllerDataAccount(filePath);
+            account = controller.GetDataAccount();
 
-            catch
+            if (account != null)
             {
-                MessageBox.Show("No Internet or Connection Problem", "Warning!");
+                txtUser.Text = account.User;
+                txtPassword.Text = account.Password;
+                cboGioiTinh.Text = account.GioiTinh;
             }
-
-            account = new ControllerDataAccount(filePath).GetDataAccount();
-            txtUser.Text = account.User;
-            txtPassword.Text = account.Password;
-            cboGioiTinh.Text = account.GioiTinh;
+            else
+            {
+                // Xử lý trường hợp account là null, ví dụ: thông báo lỗi hoặc thiết lập giá trị mặc định
+                MessageBox.Show("Không thể tải thông tin tài khoản. Vui lòng kiểm tra file dữ liệu.");
+            }
 
             txtHDSD.Text = "NOTE:" +
                            "\n\n- Nhập thông tin tài khoản vào và nhấn Save để sử dụng" +
@@ -63,7 +56,6 @@ namespace AutomaticAssessmentSurvey
             account.GioiTinh = cboGioiTinh.Text;
             new ControllerDataAccount(filePath).EditData(account);
 
-            SetResponse set = client.Set(@"Users/" + txtUser.Text, account);
             //if (set.StatusCode == System.Net.HttpStatusCode.OK)
             //{
             //    MessageBox.Show($"Successfully registered {txtUser.Text}!", "Information!");

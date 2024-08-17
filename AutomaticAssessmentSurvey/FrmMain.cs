@@ -15,14 +15,13 @@ using System.Globalization;
 using System.Threading;
 using AutomaticAssessmentSurvey;
 using System.Net.NetworkInformation;
+using System.IO;
 
 namespace AutomaticAssessmentSurvey
 {
     public partial class FrmMain : Form
     {
-        private string filePath = System.IO.Path.Combine(AppContext.BaseDirectory, "Data", "account.txt");
-        private string filePathKhen = System.IO.Path.Combine(AppContext.BaseDirectory, "Data", "khen.txt");
-        private string filePathChe = System.IO.Path.Combine(AppContext.BaseDirectory, "Data", "phebinh.txt");
+        private string filePath, filePathKhen, filePathChe;
         private IconButton clickBtn;
         private Form activeForm;
         private Account account;
@@ -33,6 +32,16 @@ namespace AutomaticAssessmentSurvey
         {
             InitializeComponent();
 
+            string relativePath;
+
+            relativePath = @"Resources\account.txt";
+            filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
+
+            relativePath = @"Resources\khen.txt";
+            filePathKhen = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
+
+            relativePath = @"Resources\phebinh.txt";
+            filePathChe = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
             // Gắn sự kiện ValueChanged với phương thức
             nudSoLuongKhaoSat.ValueChanged += nudSoLuongKhaoSat_ValueChanged;
 

@@ -19,11 +19,13 @@ namespace AutomaticAssessmentSurvey
         {
             InitializeComponent();
 
-            string relativeKhenPath = @"Resources\khen.txt";
-            filePathKhen = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativeKhenPath);
+            string relativePath;
 
-            string relativePheBinhPath = @"Resources\phebinh.txt";
-            filePathChe = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePheBinhPath);
+            relativePath = @"Resources\khen.txt";
+            filePathKhen = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
+
+            relativePath = @"Resources\phebinh.txt";
+            filePathChe = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
         }
 
         private void FrmCmt_Load(object sender, EventArgs e)

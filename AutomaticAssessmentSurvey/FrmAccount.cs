@@ -21,7 +21,7 @@ namespace AutomaticAssessmentSurvey
             InitializeComponent();
             cboGioiTinh.DrawItem += new DrawItemEventHandler(cboGioiTinh_DrawItem);
 
-            string relativePath = @"Data\account.txt";
+            string relativePath = @"Resources\account.txt";
             filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
         }
 

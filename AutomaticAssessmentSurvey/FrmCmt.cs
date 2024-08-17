@@ -19,10 +19,10 @@ namespace AutomaticAssessmentSurvey
         {
             InitializeComponent();
 
-            string relativeKhenPath = @"Data\khen.txt";
+            string relativeKhenPath = @"Resources\khen.txt";
             filePathKhen = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativeKhenPath);
 
-            string relativePheBinhPath = @"Data\phebinh.txt";
+            string relativePheBinhPath = @"Resources\phebinh.txt";
             filePathChe = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePheBinhPath);
         }
 

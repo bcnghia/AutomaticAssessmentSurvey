@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomaticAssessmentSurvey",
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AutoSurvey", "AutoSurvey\AutoSurvey.vdproj", "{AB2C7DB5-4080-4BF6-9E94-2EEAC7FA9711}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AutoSurvey Setup", "AutoSurvey Setup\AutoSurvey Setup.vdproj", "{43CE4AB7-2C06-40BC-9C74-844A0F8CC3B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,8 @@ Global
 		{F75632BF-9238-42CE-9D17-D09B0F56243B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AB2C7DB5-4080-4BF6-9E94-2EEAC7FA9711}.Debug|Any CPU.ActiveCfg = Debug
 		{AB2C7DB5-4080-4BF6-9E94-2EEAC7FA9711}.Release|Any CPU.ActiveCfg = Release
+		{43CE4AB7-2C06-40BC-9C74-844A0F8CC3B8}.Debug|Any CPU.ActiveCfg = Debug
+		{43CE4AB7-2C06-40BC-9C74-844A0F8CC3B8}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

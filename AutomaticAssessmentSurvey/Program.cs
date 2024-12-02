@@ -20,10 +20,11 @@ namespace AutomaticAssessmentSurvey
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new FrmMain());
             }
-            catch
+            catch (Exception e)
             {
                 MessageBox.Show("Đã có lỗi xảy ra trong tiến trình hoạt động:\n• Kiểm tra lại kết nối Internet!" +
-                    "\n• Cập nhật ứng dụng lên phiên bản mới nhất!",
+                    "\n• Cập nhật ứng dụng lên phiên bản mới nhất!" +
+                    "\n• Error: " + e,
                                 "Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
                 Application.Exit();
                 

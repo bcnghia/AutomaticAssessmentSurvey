@@ -138,6 +138,14 @@ namespace AutomaticAssessmentSurvey
             IJavaScriptExecutor jsExcutor = (IJavaScriptExecutor)driver;
             jsExcutor.ExecuteScript("arguments[0].click();", khaoSat);
         }
+        private void ClickKhaoSatHocKySau(int idKhaoSat)
+        {
+            IWebElement khaoSat = driver.FindElement(By.XPath($"/html/body/app-root/div/div/div/div[1]/div/div/div[1]/app-dgmain/div/div[2]/div/div/table/tbody[2]/tr[2]/td[2]/div/table/tbody/tr[{idKhaoSat + 1}]/td[1]"));
+            //khaoSat.Click();
+            Thread.Sleep(100);
+            IJavaScriptExecutor jsExcutor = (IJavaScriptExecutor)driver;
+            jsExcutor.ExecuteScript("arguments[0].click();", khaoSat);
+        }
 
         private bool CheckingConnection()
         {
@@ -401,7 +409,7 @@ namespace AutomaticAssessmentSurvey
                 Login();
 
                 // Tìm - Click vào link cần chọn
-                ClickJavaScript("Xem thời khóa biểu tuần");
+                ClickJavaScript("Thời khóa biểu dạng tuần");
             }
         }
 
@@ -461,10 +469,18 @@ namespace AutomaticAssessmentSurvey
                 Thread.Sleep(2000);
 
                 // tăng số thự tự của khảo sát lên
-                count++; 
+                count++;
 
                 // chọn vào khảo sát dựa trên số thứ tự của khảo sát
-                ClickKhaoSat(count);
+                //ClickKhaoSat(count);
+                if (checkHocKy.Checked)
+                {
+                    ClickKhaoSatHocKySau(count);
+                }
+                else
+                {
+                    ClickKhaoSat(count);
+                }
 
                 // đợi màn hình load lên Form của khảo sát vừa click
                 Thread.Sleep(1000);

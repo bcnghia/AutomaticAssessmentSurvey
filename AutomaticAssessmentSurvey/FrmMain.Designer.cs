@@ -43,6 +43,7 @@
             this.btnLichThi = new FontAwesome.Sharp.IconButton();
             this.btnTKB = new FontAwesome.Sharp.IconButton();
             this.btnRun = new FontAwesome.Sharp.IconButton();
+            this.checkHocKy = new System.Windows.Forms.CheckBox();
             this.pnlMenu.SuspendLayout();
             this.pnlDesktop.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -113,7 +114,7 @@
             this.btnCmt.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCmt.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.btnCmt.ForeColor = System.Drawing.Color.White;
-            this.btnCmt.IconChar = FontAwesome.Sharp.IconChar.CommentDots;
+            this.btnCmt.IconChar = FontAwesome.Sharp.IconChar.Commenting;
             this.btnCmt.IconColor = System.Drawing.Color.White;
             this.btnCmt.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnCmt.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -156,6 +157,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.checkHocKy);
             this.panel1.Controls.Add(this.nudSoLuongKhaoSat);
             this.panel1.Controls.Add(this.txtHDSD);
             this.panel1.Controls.Add(this.lblUser);
@@ -174,7 +176,7 @@
             this.nudSoLuongKhaoSat.Location = new System.Drawing.Point(296, 31);
             this.nudSoLuongKhaoSat.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.nudSoLuongKhaoSat.Maximum = new decimal(new int[] {
-            10,
+            20,
             0,
             0,
             0});
@@ -241,7 +243,7 @@
             this.btnTKB.BackColor = System.Drawing.Color.SlateBlue;
             this.btnTKB.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.btnTKB.ForeColor = System.Drawing.Color.White;
-            this.btnTKB.IconChar = FontAwesome.Sharp.IconChar.CalendarDays;
+            this.btnTKB.IconChar = FontAwesome.Sharp.IconChar.CalendarAlt;
             this.btnTKB.IconColor = System.Drawing.Color.White;
             this.btnTKB.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnTKB.IconSize = 40;
@@ -274,6 +276,18 @@
             this.btnRun.UseVisualStyleBackColor = false;
             this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
             // 
+            // checkHocKy
+            // 
+            this.checkHocKy.AutoSize = true;
+            this.checkHocKy.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkHocKy.ForeColor = System.Drawing.Color.White;
+            this.checkHocKy.Location = new System.Drawing.Point(9, 67);
+            this.checkHocKy.Name = "checkHocKy";
+            this.checkHocKy.Size = new System.Drawing.Size(144, 30);
+            this.checkHocKy.TabIndex = 2;
+            this.checkHocKy.Text = "Học kỳ sau";
+            this.checkHocKy.UseVisualStyleBackColor = true;
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -294,6 +308,7 @@
             this.pnlMenu.ResumeLayout(false);
             this.pnlDesktop.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSoLuongKhaoSat)).EndInit();
             this.ResumeLayout(false);
 
@@ -315,6 +330,7 @@
         private FontAwesome.Sharp.IconButton btnLichThi;
         private System.Windows.Forms.RichTextBox rtxtProgress;
         private FontAwesome.Sharp.IconButton btnCmt;
+        private System.Windows.Forms.CheckBox checkHocKy;
     }
 }
 
